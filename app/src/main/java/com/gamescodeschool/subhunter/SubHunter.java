@@ -246,3 +246,43 @@ public class SubHunter extends Activity {
     }
 
 }
+
+public abstract class GameActivity extends Activity {
+        protected GameView gameView;
+    
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+    
+            // Initialize the game view
+            gameView = createGameView();
+            setContentView(gameView);
+        }
+    
+        protected abstract GameView createGameView();
+    }
+    
+    // Base class for game views
+    public abstract class GameView extends ImageView {
+        protected Bitmap blankBitmap;
+        protected Canvas canvas;
+        protected Paint paint;
+    
+        public GameView(Context context) {
+            super(context);
+            initialize();
+        }
+    
+        private void initialize() {
+            blankBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            canvas = new Canvas(blankBitmap);
+            paint = new Paint();
+        }
+    
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            drawGame(canvas);
+        }
+    
